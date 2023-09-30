@@ -7,6 +7,7 @@ import mu.KotlinLogging
 private val logger = KotlinLogging.logger {}
 
 var habitat = HabitatModels()
+val habitats = ArrayList<HabitatModels>()
 // private var latitude: Double? = latitudeString.toDouble()
 // private var longitude: Double? = longitudeString.toDouble()
 
@@ -23,7 +24,7 @@ fun main(args: Array<String>) {
             1 -> addHabitat()
             2 -> updateHabitat()
             3 -> listHabitat()
-            -1 -> exitHabitatMenu()
+           -1 -> exitHabitatMenu()
             else -> println("Invalid Option")
         }
         println()
@@ -53,45 +54,53 @@ fun menu() : Int {
 
 fun addHabitat() {
     // var habitatType: String
-   // var latitudeString: String
-   // var longitudeString: String
-
-
+    // var latitudeString: String
+    // var longitudeString: String
     println("Add Habitat")
     println()
     print("Enter a Habitat Type: ")
     habitat.habitatType = readln()
-    println("Enter a latitude number")
+    println("Enter a latitude number e.g. 1.2")
     habitat.latitudeString = readln()
-    println("Enter a longitude number")
+    println("Enter a longitude number e.g. 3.4")
     habitat.longitudeString = readln()
     val latitude: Double? = habitat.latitudeString?.toDouble()
     val longitude: Double? = habitat.longitudeString?.toDouble()
+
     if (latitude != null && longitude != null) {
         println("You entered: [ " + habitat.habitatType + "] for Habitat Type. You entered: [ $latitude ] for latitude and you entered: $longitude for longitude!")
     } else
         println("Invalid latitude & longitude input")
+
+    if (habitat.habitatType.isNotEmpty() && habitat.latitudeString.isNotEmpty() && habitat.longitudeString.isNotEmpty()) {
+        habitats.add(habitat.copy())
+        logger.info("Habitat added : [" + habitat.habitatType + "]")
+    } else
+        logger.info("Habitat Type not Added")
 }
 
-fun updateHabitat() {
-    println("Update a Habitat")
-    println()
-    println("Enter a new Habitat Type for [ " + habitat.habitatType + " ] : ")
-    habitat.habitatType = readln()
-    println("Enter a new latitude for [ " + habitat.latitudeString + " ] : ")
-    habitat.latitudeString = readln()
-    println("Enter a new longitude for [ " + habitat.longitudeString + " ] : ")
-    habitat.longitudeString = readln()
-    val latitude: Double? = habitat.latitudeString?.toDouble()
-    val longitude: Double? = habitat.longitudeString?.toDouble()
-    println("You updated [ " + habitat.habitatType + " ] for Habitat Type and [$latitude] for latitude and [$longitude] for longitude")
-}
+    fun updateHabitat() {
+        println("Update a Habitat")
+        println()
+        println("Enter a new Habitat Type for [ " + habitat.habitatType + " ] : ")
+        habitat.habitatType = readln()
+        println("Enter a new latitude for [ " + habitat.latitudeString + " ] : ")
+        habitat.latitudeString = readln()
+        println("Enter a new longitude for [ " + habitat.longitudeString + " ] : ")
+        habitat.longitudeString = readln()
+        val latitude: Double? = habitat.latitudeString?.toDouble()
+        val longitude: Double? = habitat.longitudeString?.toDouble()
+        println("You updated [ " + habitat.habitatType + " ] for Habitat Type and [$latitude] for latitude and [$longitude] for longitude")
+    }
 
 
-fun listHabitat() {
-    println("You chose to List all Placemarks")
-}
+    fun listHabitat() {
+        println("You chose to List all Habitat Types")
+        println()
+        habitats.forEach { logger.info ( "${it}" ) }
+    }
 
-fun exitHabitatMenu() {
-    println("Exiting Habitat Menu")
-}
+    fun exitHabitatMenu() {
+        println("Exiting Habitat Menu")
+    }
+
