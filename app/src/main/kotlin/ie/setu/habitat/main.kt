@@ -43,10 +43,11 @@ fun menu() : Int {
     return option
 }
 
-fun addHabitat(){
-    var habitatType : String
-    val  latitudeString: String
-    var latitude : Double? = latitudeString?.toDouble()
+fun addHabitat() {
+    var habitatType: String
+    var latitudeString: String
+    var longitudeString: String
+
 
     println("Add Habitat")
     println()
@@ -54,17 +55,24 @@ fun addHabitat(){
     habitatType = readln()
     println("Enter a latitude number")
     latitudeString = readln()
-    println("You entered $habitatType for Habitat Type")
+    println("Enter a longitude number")
+    longitudeString = readln()
+    val latitude: Double? = latitudeString?.toDouble()
+    val longitude: Double? = longitudeString?.toDouble()
+    if (latitude != null && longitude != null) {
+        println("You entered: $habitatType for Habitat Type. You entered: $latitude for latitude and you entered: $longitude for longitude!")
+    } else
+        println("Invalid latitude & longitude input")
 }
 
 fun updateHabitat(){
     println("You chose to update a Habitat")
 }
 
-fun listHabitat(){
+fun listHabitat() {
     println("You chose to List all Placemarks")
 }
 
-fun exitHabitatMenu(){
+fun exitHabitatMenu() {
     println("Exiting Habitat Menu")
 }
