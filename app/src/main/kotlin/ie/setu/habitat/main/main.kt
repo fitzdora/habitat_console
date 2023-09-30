@@ -1,4 +1,4 @@
-package ie.setu.habitat
+package ie.setu.habitat.main
 
 import mu.KotlinLogging
 
