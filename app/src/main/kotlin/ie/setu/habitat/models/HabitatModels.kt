@@ -1,4 +1,7 @@
 package ie.setu.habitat.models
 
-class HabitatModels {
-}
+data class HabitatModels (
+    var habitatType : String = "",
+    var latitudeString : String = "",
+    var longitudeString : String = ""
+)

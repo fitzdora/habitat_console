@@ -1,12 +1,12 @@
 package ie.setu.habitat.main
 
+import ie.setu.habitat.models.HabitatModels
 import mu.KotlinLogging
+
 
 private val logger = KotlinLogging.logger {}
 
-var habitatType = ""
-var latitudeString = ""
-var longitudeString = ""
+var habitat = HabitatModels()
 // private var latitude: Double? = latitudeString.toDouble()
 // private var longitude: Double? = longitudeString.toDouble()
 
@@ -60,15 +60,15 @@ fun addHabitat() {
     println("Add Habitat")
     println()
     print("Enter a Habitat Type: ")
-    habitatType = readln()
+    habitat.habitatType = readln()
     println("Enter a latitude number")
-    latitudeString = readln()
+    habitat.latitudeString = readln()
     println("Enter a longitude number")
-    longitudeString = readln()
-    val latitude: Double? = latitudeString?.toDouble()
-    val longitude: Double? = longitudeString?.toDouble()
+    habitat.longitudeString = readln()
+    val latitude: Double? = habitat.latitudeString?.toDouble()
+    val longitude: Double? = habitat.longitudeString?.toDouble()
     if (latitude != null && longitude != null) {
-        println("You entered: $habitatType for Habitat Type. You entered: $latitude for latitude and you entered: $longitude for longitude!")
+        println("You entered: [ " + habitat.habitatType + "] for Habitat Type. You entered: [ $latitude ] for latitude and you entered: $longitude for longitude!")
     } else
         println("Invalid latitude & longitude input")
 }
@@ -76,15 +76,15 @@ fun addHabitat() {
 fun updateHabitat() {
     println("Update a Habitat")
     println()
-    println("Enter a new Habitat Type for [ $habitatType ] : ")
-    habitatType = readln()
-    println("Enter a new latitude for [$latitudeString] : ")
-    latitudeString = readln()
-    println("Enter a new longitude for [$longitudeString] : ")
-    longitudeString = readln()
-    val latitude: Double? = latitudeString?.toDouble()
-    val longitude: Double? = longitudeString?.toDouble()
-    println("You updated [ $habitatType ] for Habitat Type and [$latitude] for latitude and [$longitude] for longitude")
+    println("Enter a new Habitat Type for [ " + habitat.habitatType + " ] : ")
+    habitat.habitatType = readln()
+    println("Enter a new latitude for [ " + habitat.latitudeString + " ] : ")
+    habitat.latitudeString = readln()
+    println("Enter a new longitude for [ " + habitat.longitudeString + " ] : ")
+    habitat.longitudeString = readln()
+    val latitude: Double? = habitat.latitudeString?.toDouble()
+    val longitude: Double? = habitat.longitudeString?.toDouble()
+    println("You updated [ " + habitat.habitatType + " ] for Habitat Type and [$latitude] for latitude and [$longitude] for longitude")
 }
 
 
