@@ -1,13 +1,13 @@
 package ie.setu.habitat.main
 
-import ie.setu.habitat.models.HabitatModels
+import ie.setu.habitat.models.HabitatModel
 import mu.KotlinLogging
 
 
 private val logger = KotlinLogging.logger {}
 
-var habitat = HabitatModels()
-val habitats = ArrayList<HabitatModels>()
+//var habitat = HabitatModel()
+val habitats = ArrayList<HabitatModel>()
 // private var latitude: Double? = latitudeString.toDouble()
 // private var longitude: Double? = longitudeString.toDouble()
 
@@ -23,7 +23,9 @@ fun main(args: Array<String>) {
         when(input) {
             1 -> addHabitat()
             2 -> updateHabitat()
-            3 -> listHabitat()
+            3 -> listHabitats()
+            4 -> searchHabitat()
+            -99 -> dummyData()
            -1 -> exitHabitatMenu()
             else -> println("Invalid Option")
         }
@@ -37,13 +39,14 @@ fun menu() : Int {
     var option : Int
     var input: String? = null
 
-    println("Main Menu")
+    println("MAIN MENU")
     println(" 1. Add Habitat")
     println(" 2. Update Habitat")
-    println(" 3. List All Habitats")
+    println(" 3. List all Habitats")
+    println(" 4. Search Habitats")
     println("-1. Exit")
     println()
-    print("Enter an integer : ")
+    print("Enter an option : ")
     input = readLine()!!
     option = if (input.toIntOrNull() != null && !input.isEmpty())
         input.toInt()
@@ -56,25 +59,27 @@ fun addHabitat() {
     // var habitatType: String
     // var latitudeString: String
     // var longitudeString: String
+    var aHabitat = HabitatModel()
     println("Add Habitat")
     println()
     print("Enter a Habitat Type: ")
-    habitat.habitatType = readln()
+    aHabitat.habitatType = readln()
     println("Enter a latitude number e.g. 1.2")
-    habitat.latitudeString = readln()
+    aHabitat.latitudeString = readln()
     println("Enter a longitude number e.g. 3.4")
-    habitat.longitudeString = readln()
-    val latitude: Double? = habitat.latitudeString?.toDouble()
-    val longitude: Double? = habitat.longitudeString?.toDouble()
+    aHabitat.longitudeString = readln()
+    val latitude: Double? = aHabitat.latitudeString?.toDouble()
+    val longitude: Double? = aHabitat.longitudeString?.toDouble()
 
     if (latitude != null && longitude != null) {
-        println("You entered: [ " + habitat.habitatType + "] for Habitat Type. You entered: [ $latitude ] for latitude and you entered: $longitude for longitude!")
+        println("You entered: [ " + aHabitat.habitatType + "] for Habitat Type. You entered: [ $latitude ] for latitude and you entered: $longitude for longitude!")
     } else
         println("Invalid latitude & longitude input")
 
-    if (habitat.habitatType.isNotEmpty() && habitat.latitudeString.isNotEmpty() && habitat.longitudeString.isNotEmpty()) {
-        habitats.add(habitat.copy())
-        logger.info("Habitat added : [" + habitat.habitatType + "]")
+    if (aHabitat.habitatType.isNotEmpty() && aHabitat.latitudeString.isNotEmpty() && aHabitat.longitudeString.isNotEmpty()) {
+        aHabitat.id++
+        habitats.add(aHabitat.copy())
+        logger.info("Habitat added : [" + aHabitat.habitatType + "]")
     } else
         logger.info("Habitat Type not Added")
 }
@@ -82,25 +87,76 @@ fun addHabitat() {
     fun updateHabitat() {
         println("Update a Habitat")
         println()
-        println("Enter a new Habitat Type for [ " + habitat.habitatType + " ] : ")
-        habitat.habitatType = readln()
-        println("Enter a new latitude for [ " + habitat.latitudeString + " ] : ")
-        habitat.latitudeString = readln()
-        println("Enter a new longitude for [ " + habitat.longitudeString + " ] : ")
-        habitat.longitudeString = readln()
-        val latitude: Double? = habitat.latitudeString?.toDouble()
-        val longitude: Double? = habitat.longitudeString?.toDouble()
-        println("You updated [ " + habitat.habitatType + " ] for Habitat Type and [$latitude] for latitude and [$longitude] for longitude")
-    }
+        listHabitats()
+        //link to search functionality
+        var searchId = getId()
+        val aHabitat = search(searchId)
 
 
-    fun listHabitat() {
-        println("You chose to List all Habitat Types")
-        println()
-        habitats.forEach { logger.info ( "${it}" ) }
+        if (aHabitat != null) {
+            println("Enter a new Habitat Type for [ " + aHabitat.habitatType + " ] : ")
+            aHabitat.habitatType = readln()
+            println("Enter a new latitude for [ " + aHabitat.latitudeString + " ] : ")
+            aHabitat.latitudeString = readln()
+            println("Enter a new longitude for [ " + aHabitat.longitudeString + " ] : ")
+            aHabitat.longitudeString = readln()
+            val latitude: Double? = aHabitat.latitudeString?.toDouble()
+            val longitude: Double? = aHabitat.longitudeString?.toDouble()
+
+            if (aHabitat.habitatType.isNullOrEmpty() && aHabitat.latitudeString.isNullOrEmpty() && aHabitat.longitudeString.isNullOrEmpty()) {
+                println(
+                    "You updated [ " + aHabitat.habitatType + " ] for Habitat Type " +
+                            "and [$latitude] for latitude " +
+                            "and [$longitude] for longitude"
+                )
+            } else {
+                logger.info("Habitat Not Updated")
+            }
+        }
     }
 
-    fun exitHabitatMenu() {
-        println("Exiting Habitat Menu")
-    }
+        fun listHabitats() {
+            println("You chose to List all Habitat Types")
+            println()
+            habitats.forEach { logger.info("${it}") }
+        }
+
+        fun exitHabitatMenu() {
+            println("Exiting Habitat Menu")
+        }
+
+        fun searchHabitat() {
+            var searchId = getId()
+            val aHabitat = search(searchId)
+
+            if(aHabitat != null)
+                println("Habitat Details [$aHabitat]")
+            else
+                println("Habitat not found...")
+        }
+
+        fun search(id: Long): HabitatModel? {
+            var foundHabitat: HabitatModel? =
+                habitats.find { h -> h.id == id }
+            return foundHabitat
+
+        }
+
+        fun getId(): Long {
+            var strId: String? // String to hold user input
+            var searchId: Long // Long to hold converted id
+            print("Enter id to Search/Update : ")
+            strId = readLine()!!
+            searchId = if (strId.toLongOrNull() != null && !strId.isEmpty())
+                strId.toLong()
+            else
+                -9
+            return searchId
+        }
+
+        fun dummyData(){
+            habitats.add(HabitatModel(1, "Garden", "1.2", "2.3"))
+            habitats.add(HabitatModel(2, "Field", "3.4","4.5"))
+            habitats.add(HabitatModel(3,"Hedgerow", "6.7","7.8"))
+        }
 
