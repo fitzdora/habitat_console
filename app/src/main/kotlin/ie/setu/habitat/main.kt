@@ -3,9 +3,17 @@ package ie.setu.habitat
 import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
+
+var habitatType = ""
+var latitudeString = ""
+var longitudeString = ""
+// private var latitude: Double? = latitudeString.toDouble()
+// private var longitude: Double? = longitudeString.toDouble()
+
+
 fun main(args: Array<String>) {
     logger.info { "Launching Habitat Console App" }
-    println("Habitat Kotlin App Version 1.0")
+    println("Habitat Kotlin App Version 2.0")
 
     var input: Int
 
@@ -44,9 +52,9 @@ fun menu() : Int {
 }
 
 fun addHabitat() {
-    var habitatType: String
-    var latitudeString: String
-    var longitudeString: String
+    // var habitatType: String
+   // var latitudeString: String
+   // var longitudeString: String
 
 
     println("Add Habitat")
@@ -65,9 +73,20 @@ fun addHabitat() {
         println("Invalid latitude & longitude input")
 }
 
-fun updateHabitat(){
-    println("You chose to update a Habitat")
+fun updateHabitat() {
+    println("Update a Habitat")
+    println()
+    println("Enter a new Habitat Type for [ $habitatType ] : ")
+    habitatType = readln()
+    println("Enter a new latitude for [$latitudeString] : ")
+    latitudeString = readln()
+    println("Enter a new longitude for [$longitudeString] : ")
+    longitudeString = readln()
+    val latitude: Double? = latitudeString?.toDouble()
+    val longitude: Double? = longitudeString?.toDouble()
+    println("You updated [ $habitatType ] for Habitat Type and [$latitude] for latitude and [$longitude] for longitude")
 }
+
 
 fun listHabitat() {
     println("You chose to List all Placemarks")
