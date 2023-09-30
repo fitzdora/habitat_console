@@ -44,8 +44,19 @@ fun menu() : Int {
 }
 
 fun addHabitat(){
-    println("You chose to add a Habitat")
+    var habitatType : String
+    val  latitudeString: String
+    var latitude : Double? = latitudeString?.toDouble()
+
+    println("Add Habitat")
+    println()
+    print("Enter a Habitat Type: ")
+    habitatType = readln()
+    println("Enter a latitude number")
+    latitudeString = readln()
+    println("You entered $habitatType for Habitat Type")
 }
+
 fun updateHabitat(){
     println("You chose to update a Habitat")
 }
