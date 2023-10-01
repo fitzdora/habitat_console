@@ -77,7 +77,7 @@ fun addHabitat() {
         println("Invalid latitude & longitude input")
 
     if (aHabitat.habitatType.isNotEmpty() && aHabitat.latitudeString.isNotEmpty() && aHabitat.longitudeString.isNotEmpty()) {
-        aHabitat.id++
+        aHabitat.id = habitats.size.toLong()
         habitats.add(aHabitat.copy())
         logger.info("Habitat added : [" + aHabitat.habitatType + "]")
     } else
@@ -91,19 +91,25 @@ fun addHabitat() {
         //link to search functionality
         var searchId = getId()
         val aHabitat = search(searchId)
+        var tempHabitatType: String?
+        var tempLatitude: String?
+        var tempLongitude: String?
 
 
         if (aHabitat != null) {
             println("Enter a new Habitat Type for [ " + aHabitat.habitatType + " ] : ")
-            aHabitat.habitatType = readln()
+            tempHabitatType = readln()
             println("Enter a new latitude for [ " + aHabitat.latitudeString + " ] : ")
-            aHabitat.latitudeString = readln()
+            tempLatitude = readln()
             println("Enter a new longitude for [ " + aHabitat.longitudeString + " ] : ")
-            aHabitat.longitudeString = readln()
-            val latitude: Double? = aHabitat.latitudeString?.toDouble()
-            val longitude: Double? = aHabitat.longitudeString?.toDouble()
+            tempLongitude = readln()
+            val latitude: Double? = tempLatitude.toDouble()
+            val longitude: Double? = tempLongitude.toDouble()
 
-            if (aHabitat.habitatType.isNullOrEmpty() && aHabitat.latitudeString.isNullOrEmpty() && aHabitat.longitudeString.isNullOrEmpty()) {
+            if (!tempHabitatType.isNullOrEmpty() && !tempLatitude.isNullOrEmpty() && !tempLongitude.isNullOrEmpty()) {
+                aHabitat.habitatType = tempHabitatType
+                aHabitat.latitudeString = tempLatitude
+                aHabitat.longitudeString = tempLongitude
                 println(
                     "You updated [ " + aHabitat.habitatType + " ] for Habitat Type " +
                             "and [$latitude] for latitude " +
