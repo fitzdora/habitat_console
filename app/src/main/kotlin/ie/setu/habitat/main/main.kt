@@ -1,29 +1,33 @@
 package ie.setu.habitat.main
 
+import ie.setu.habitat.models.HabitatMemStore
 import ie.setu.habitat.models.HabitatModel
 import mu.KotlinLogging
+import ie.setu.habitat.views.HabitatView
 
 
 private val logger = KotlinLogging.logger {}
 
 //var habitat = HabitatModel()
-val habitats = ArrayList<HabitatModel>()
+//val habitats = ArrayList<HabitatModel>()
+val habitats = HabitatMemStore()
+val habitatView = HabitatView()
 // private var latitude: Double? = latitudeString.toDouble()
 // private var longitude: Double? = longitudeString.toDouble()
 
 
 fun main(args: Array<String>) {
     logger.info { "Launching Habitat Console App" }
-    println("Habitat Kotlin App Version 2.0")
+    println("Habitat Kotlin App Version 3.0")
 
     var input: Int
 
     do {
-        input = menu()
+        input = habitatView.menu()
         when(input) {
             1 -> addHabitat()
             2 -> updateHabitat()
-            3 -> listHabitats()
+            3 -> habitatView.listHabitats(habitats)
             4 -> searchHabitat()
             -99 -> dummyData()
            -1 -> exitHabitatMenu()
@@ -34,7 +38,7 @@ fun main(args: Array<String>) {
     logger.info { "Shutting Down Habitat Console App" }
 }
 
-fun menu() : Int {
+/*fun menu() : Int {
 
     var option : Int
     var input: String? = null
@@ -53,14 +57,19 @@ fun menu() : Int {
     else
         -9
     return option
-}
+}*/
 
 fun addHabitat() {
     // var habitatType: String
     // var latitudeString: String
     // var longitudeString: String
-    var aHabitat = HabitatModel()
-    println("Add Habitat")
+    val aHabitat = HabitatModel()
+    if (habitatView.addHabitatData(aHabitat))
+        habitats.create(aHabitat)
+    else
+        logger.info("Placemark Not Added")
+
+   /* println("Add Habitat")
     println()
     print("Enter a Habitat Type: ")
     aHabitat.habitatType = readln()
@@ -69,35 +78,46 @@ fun addHabitat() {
     println("Enter a longitude number e.g. 3.4")
     aHabitat.longitudeString = readln()
     val latitude: Double? = aHabitat.latitudeString?.toDouble()
-    val longitude: Double? = aHabitat.longitudeString?.toDouble()
+    val longitude: Double? = aHabitat.longitudeString?.toDouble()*/
 
-    if (latitude != null && longitude != null) {
+   /* if (latitude != null && longitude != null) {
         println("You entered: [ " + aHabitat.habitatType + "] for Habitat Type. You entered: [ $latitude ] for latitude and you entered: $longitude for longitude!")
     } else
-        println("Invalid latitude & longitude input")
+        println("Invalid latitude & longitude input")*/
 
-    if (aHabitat.habitatType.isNotEmpty() && aHabitat.latitudeString.isNotEmpty() && aHabitat.longitudeString.isNotEmpty()) {
-        aHabitat.id = habitats.size.toLong()
-        habitats.add(aHabitat.copy())
-        logger.info("Habitat added : [" + aHabitat.habitatType + "]")
-    } else
-        logger.info("Habitat Type not Added")
+//    if (aHabitat.habitatType.isNotEmpty() && aHabitat.latitudeString.isNotEmpty() && aHabitat.longitudeString.isNotEmpty()) {
+//        aHabitat.id = habitats.size.toLong()
+//        habitats.add(aHabitat.copy())
+//        logger.info("Habitat added : [" + aHabitat.habitatType + "]")
+//    } else
+//        logger.info("Habitat Type not Added")
 }
 
     fun updateHabitat() {
-        println("Update a Habitat")
+   /*     println("Update a Habitat")
         println()
         listHabitats()
-        //link to search functionality
-        var searchId = getId()
-        val aHabitat = search(searchId)
-        var tempHabitatType: String?
-        var tempLatitude: String?
-        var tempLongitude: String?
 
+    */
+        //link to search functionality
+        habitatView.listHabitats(habitats)
+        var searchId = habitatView.getId()
+        val aHabitat = search(searchId)
+
+       /* var tempHabitatType: String?
+        var tempLatitude: String?
+        var tempLongitude: String?*/
 
         if (aHabitat != null) {
-            println("Enter a new Habitat Type for [ " + aHabitat.habitatType + " ] : ")
+            if (habitatView.updateHabitatData(aHabitat)) {
+                habitats.update(aHabitat)
+                habitatView.showHabitat((aHabitat))
+                logger.info("Habitat Updated : [ $aHabitat ]")
+            } else logger.info("Habitat Not Updated")
+        }
+        else println("Habitat Not Updated.....")
+        }
+           /* println("Enter a new Habitat Type for [ " + aHabitat.habitatType + " ] : ")
             tempHabitatType = readln()
             println("Enter a new latitude for [ " + aHabitat.latitudeString + " ] : ")
             tempLatitude = readln()
@@ -118,38 +138,43 @@ fun addHabitat() {
             } else {
                 logger.info("Habitat Not Updated")
             }
-        }
+        }*/
     }
 
-        fun listHabitats() {
+      /*  fun listHabitats() {
             println("You chose to List all Habitat Types")
             println()
             habitats.forEach { logger.info("${it}") }
             println()
-        }
+        }*/
 
         fun exitHabitatMenu() {
             println("Exiting Habitat Menu")
         }
 
         fun searchHabitat() {
-            var searchId = getId()
+            val aHabitat = search(habitatView.getId())!!
+            habitatView.showHabitat(aHabitat)
+
+            /*var searchId = getId()
             val aHabitat = search(searchId)
 
             if(aHabitat != null)
                 println("Habitat Details [$aHabitat]")
             else
-                println("Habitat not found...")
+                println("Habitat not found...")*/
         }
 
         fun search(id: Long): HabitatModel? {
-            var foundHabitat: HabitatModel? =
-                habitats.find { h -> h.id == id }
+            var foundHabitat = habitats.findOne(id)
             return foundHabitat
+//            var foundHabitat: HabitatModel? =
+//                habitats.find { h -> h.id == id }
+//            return foundHabitat
 
         }
 
-        fun getId(): Long {
+     /*   fun getId(): Long {
             var strId: String? // String to hold user input
             var searchId: Long // Long to hold converted id
             print("Enter id to Search/Update : ")
@@ -159,11 +184,11 @@ fun addHabitat() {
             else
                 -9
             return searchId
-        }
+        }*/
 
         fun dummyData() {
-            habitats.add(HabitatModel(1, "Garden", "1.2", "2.3"))
-            habitats.add(HabitatModel(2, "Field", "3.4","4.5"))
-            habitats.add(HabitatModel(3,"Hedgerow", "6.7","7.8"))
+            habitats.create(HabitatModel(1,"Garden", "1.2", "2.3"))
+            habitats. create(HabitatModel(2, "Field", "3.4","4.5"))
+            habitats.create(HabitatModel(3,"Hedgerow", "6.7","7.8"))
         }
 
