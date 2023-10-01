@@ -125,6 +125,7 @@ fun addHabitat() {
             println("You chose to List all Habitat Types")
             println()
             habitats.forEach { logger.info("${it}") }
+            println()
         }
 
         fun exitHabitatMenu() {
@@ -160,7 +161,7 @@ fun addHabitat() {
             return searchId
         }
 
-        fun dummyData(){
+        fun dummyData() {
             habitats.add(HabitatModel(1, "Garden", "1.2", "2.3"))
             habitats.add(HabitatModel(2, "Field", "3.4","4.5"))
             habitats.add(HabitatModel(3,"Hedgerow", "6.7","7.8"))
