@@ -96,7 +96,7 @@ fun main(args: Array<String>) {
 //        logger.info("Habitat added : [" + aHabitat.habitatType + "]")
 //    } else
 //        logger.info("Habitat Type not Added")
-}
+
 
    /* fun updateHabitat() {*/
    /*     println("Update a Habitat")
@@ -144,7 +144,7 @@ fun main(args: Array<String>) {
                 logger.info("Habitat Not Updated")
             }
         }*/
-    }
+
 
       /*  fun listHabitats() {
             println("You chose to List all Habitat Types")
@@ -168,7 +168,7 @@ fun main(args: Array<String>) {
                 println("Habitat Details [$aHabitat]")
             else
                 println("Habitat not found...")*/
-        }
+
 
      /*   fun search(id: Long): HabitatModel? {
             var foundHabitat = habitats.findOne(id)

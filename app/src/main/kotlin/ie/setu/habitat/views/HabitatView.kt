@@ -34,7 +34,7 @@ class HabitatView {
 
     fun showHabitat(habitat: HabitatModel) {
         if (habitat != null)
-            println("Habitat Details [ " $habitatType "]")
+            println("Habitat Details [ $habitat ]")
         else
         println("Habitat Not Found")
     }

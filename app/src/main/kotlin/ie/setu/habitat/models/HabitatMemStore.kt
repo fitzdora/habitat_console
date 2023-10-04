@@ -14,9 +14,7 @@ class HabitatMemStore : HabitatStore {
     val habitats = ArrayList<HabitatModel>()
 
     override fun findAll(): List<HabitatModel> {
-       List<HabitatModel> {
            return habitats
-       }
     }
 
     override fun findOne(id: Long): HabitatModel? {
