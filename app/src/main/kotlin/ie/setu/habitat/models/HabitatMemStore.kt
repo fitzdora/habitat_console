@@ -37,6 +37,10 @@ class HabitatMemStore : HabitatStore {
         }
     }
 
+    override fun delete(habitat: HabitatModel){
+        habitats.remove(habitat)
+    }
+
     internal fun logAll() {
         habitats.forEach{ logger.info("${it}")}
     }

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1446020995047143885,
+    "habitatType": "Field",
+    "latitudeString": "3.4",
+    "longitudeString": "3.4"
+  },
+  {
+    "id": 9118425555783611305,
+    "habitatType": "Garden",
+    "latitudeString": "7.8",
+    "longitudeString": "7.8"
+  },
+  {
+    "id": -5505947694632975540,
+    "habitatType": "Meadow",
+    "latitudeString": "3.4",
+    "longitudeString": "3.4"
+  },
+  {
+    "id": 7773880025655772306,
+    "habitatType": "City",
+    "latitudeString": "3.4",
+    "longitudeString": "3.4"
+  }
+]

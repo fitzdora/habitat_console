@@ -14,6 +14,7 @@ class HabitatView {
         println(" 2. Update Habitat")
         println(" 3. List all Habitats")
         println(" 4. Search Habitats")
+        println(" 5. Delete Habitats")
         println("-1. Exit")
         println()
         print("Enter an option : ")

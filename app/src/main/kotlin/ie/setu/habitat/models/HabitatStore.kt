@@ -5,4 +5,5 @@ interface HabitatStore {
     fun findOne(id: Long): HabitatModel?
     fun create (habitat: HabitatModel)
     fun update(habitat: HabitatModel)
+    fun delete(habitat: HabitatModel)
 }
