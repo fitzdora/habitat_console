@@ -47,8 +47,24 @@ class HabitatView {
         habitat.latitudeString = readln()
         println("Enter a longitude number e.g. 3.4")
         habitat.longitudeString = readln()
+        //checking data conversion before moving further to MVC
+        //this input should be eventually provided by the images
+        //needs more work later as storing invalid data and empty string is giving exit code 1
         val latitude: Double? = habitat.latitudeString?.toDouble()
+        println("Latitude as Double: $latitude")
         val longitude: Double? = habitat.longitudeString?.toDouble()
+        println("Longitude as Double: $longitude")
+        //setting more validation for datatype lon/lat
+        if (latitude != null && longitude !=null)
+            if(latitude in -90.0..90.0 && longitude in -180.0..180.0) {
+                habitat.latitudeString = latitude.toString()
+                habitat.latitudeString = longitude.toString()
+            } else {
+                println("Invalid latitude or longitude range.")
+            } else {
+                println("Invalid latitude or longitude format")
+        }
+
 
         return habitat.habitatType.isNotEmpty() && habitat.latitudeString.isNotEmpty() && habitat.longitudeString.isNotEmpty()
     }

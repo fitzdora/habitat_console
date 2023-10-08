@@ -13,7 +13,7 @@ class HabitatController {
 
     init {
         logger.info { "Launching Habitat Console App" }
-        println(" Habitat Kotlin app Version 1.4")
+        println(" Habitat Kotlin app Version 1.5")
     }
 
     fun start() {
@@ -33,7 +33,7 @@ class HabitatController {
             println()
         } while (input != -1)
         logger.info { "Shutting Down Habitat Console App" }
-        return TODO("Provide the return value")
+
     }
 
         fun menu(): Int {
